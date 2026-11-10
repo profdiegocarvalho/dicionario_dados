@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dicionário de Dados & Governança | Juliana Campos de Jesus Advogados</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="navbar navbar-expand-lg sticky-top custom-topbar shadow-sm">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand text-white fw-bold d-flex align-items-center gap-2" href="#">
+        <i class="fa-solid fa-database"></i>
+        <span>Juliana Campos de Jesus Sociedade Individual de Advogados</span>
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-light text-dark d-none d-md-inline-block">Sistema de Gestão Contratual e Processos</span>
+        <button class="btn btn-outline-light btn-sm" id="btnThemeToggle" title="Alternar Tema">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- SIDEBAR ESQUERDA -->
+      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
+        <div class="position-sticky pt-3 sidebar-sticky">
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-2 text-uppercase fw-bold text-muted">
+            <span>Tabelas do Sistema</span>
+            <span class="badge bg-primary rounded-pill" id="tableCount">19</span>
+          </h6>
+          <ul class="nav flex-column mb-4" id="sidebarMenuList">
+            <li class="nav-item"><a class="nav-link" href="#tabela_advogado"><i class="fa-solid fa-table me-2"></i>advogado</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_audiencia"><i class="fa-solid fa-table me-2"></i>audiencia</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_cliente"><i class="fa-solid fa-table me-2"></i>cliente</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_comarca"><i class="fa-solid fa-table me-2"></i>comarca</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_consentimento_lgpd"><i class="fa-solid fa-table me-2"></i>consentimento_lgpd</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_contrato"><i class="fa-solid fa-table me-2"></i>contrato</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_documento"><i class="fa-solid fa-table me-2"></i>documento</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_endereco"><i class="fa-solid fa-table me-2"></i>endereco</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_forma_pagamento"><i class="fa-solid fa-table me-2"></i>forma_pagamento</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_log_auditoria"><i class="fa-solid fa-table me-2"></i>log_auditoria</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_municipio"><i class="fa-solid fa-table me-2"></i>municipio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_orgao_judicial"><i class="fa-solid fa-table me-2"></i>orgao_judicial</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_pagamento"><i class="fa-solid fa-table me-2"></i>pagamento</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_parcela"><i class="fa-solid fa-table me-2"></i>parcela</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_parte"><i class="fa-solid fa-table me-2"></i>parte</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_parte_processo"><i class="fa-solid fa-table me-2"></i>parte_processo</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_prazo_processual"><i class="fa-solid fa-table me-2"></i>prazo_processual</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_processo"><i class="fa-solid fa-table me-2"></i>processo</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_telefone_cliente"><i class="fa-solid fa-table me-2"></i>telefone_cliente</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tabela_usuario"><i class="fa-solid fa-table me-2"></i>usuario</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- ÁREA PRINCIPAL -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+
+        <!-- PAINEL DE IDENTIFICAÇÃO DO PROJETO -->
+        <section class="card mb-4 border-0 shadow-sm custom-card-header">
+          <div class="card-body p-4">
+            <h2 class="h4 text-primary-custom mb-3 fw-bold">Painel de Governança e Metadados do Banco de Dados</h2>
+            <div class="row g-3">
+              <div class="col-lg-6">
+                <p class="mb-2"><strong>Escopo do Projeto:</strong> Gestão centralizada de clientes, contratos de honorários, parcelamento, pagamentos manuais, processos judiciais, partes, audiências, prazos processuais, metadados de documentos, auditoria append-only e conformidade com a LGPD para a Juliana Campos de Jesus Sociedade Individual de Advogados.</p>
+                <p class="mb-0"><strong>Tecnologia SGBD:</strong> MySQL 8.4 LTS (Engine InnoDB, Charset utf8mb4 / Collation utf8mb4_0900_ai_ci).</p>
+              </div>
+              <div class="col-lg-6 border-start-lg">
+                <p class="mb-1"><strong>Professor Orientador:</strong> Prof. Dr. Diego Carvalho</p>
+                <p class="mb-1"><strong>Data Owners & Stewards:</strong></p>
+                <ul class="list-unstyled mb-0 ms-2">
+                  <li><i class="fa-solid fa-user-shield text-secondary me-2"></i>João Victor de Jesus Silva (RA: 48134872) - Data Steward</li>
+                  <li><i class="fa-solid fa-user-shield text-secondary me-2"></i>Wendel Alves Viana (RA: 46049169) - Data Owner</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAINEL DE CONTROLE / AÇÕES / BUSCA -->
+        <section class="card mb-4 border-0 shadow-sm">
+          <div class="card-body p-3">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-6 col-lg-7">
+                <div class="input-group">
+                  <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                  <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Pesquisar por tabela, coluna, tipo de dado ou regra de negócio...">
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-5 d-flex gap-2 justify-content-md-end">
+                <a href="docs/Especificacao_Requisitos_Regras_Negocio_BD.pdf" download class="btn btn-primary-custom text-white fw-medium d-flex align-items-center gap-2">
+                  <i class="fa-solid fa-file-pdf"></i> Baixar Requisitos (PDF)
+                </a>
+                <button type="button" class="btn btn-outline-primary-custom fw-medium d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalDER">
+                  <i class="fa-solid fa-diagram-project"></i> Visualizar DER
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SEÇÕES DAS TABELAS (DICIONÁRIO COMPLETO 100% DDL) -->
+        <div id="dictionaryContent">
+
+          <!-- TABELA: ADVOGADO -->
+          <section id="tabela_advogado" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>advogado</h3>
+              <p class="text-muted small mb-0">Armazena os dados dos advogados responsáveis pelos contratos e processos judiciais do escritório.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_advogado</td>
+                    <td>Identificador único do advogado no sistema.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; advogado.id_advogado</td>
+                    <td>ADMIN: C/R/U/E | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">oab</td>
+                    <td>Número de inscrição da OAB do advogado.</td>
+                    <td>VARCHAR(20)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Advogado &rarr; advogado.oab</td>
+                    <td>ADMIN: C/R/U/E | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">of_oab</td>
+                    <td>Unidade federativa do conselho seccional da OAB.</td>
+                    <td>CHAR(2)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Advogado &rarr; advogado.of_oab</td>
+                    <td>ADMIN: C/R/U/E | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">telefone</td>
+                    <td>Telefone de contato do advogado.</td>
+                    <td>VARCHAR(20)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Advogado &rarr; advogado.telefone</td>
+                    <td>ADMIN: C/R/U/E | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">email</td>
+                    <td>E-mail institucional/profissional do advogado.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Advogado &rarr; advogado.email</td>
+                    <td>ADMIN: C/R/U/E | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Indicador de registro ativo (1) ou inativo (0). Exclusão lógica.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; advogado.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_usuario</td>
+                    <td>Chave estrangeira vinculando ao usuário do sistema (1:1).</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>usuario.id_usuario &rarr; advogado.id_usuario</td>
+                    <td>ADMIN: C/R/U/E | ADV: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: AUDIENCIA -->
+          <section id="tabela_audiencia" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>audiencia</h3>
+              <p class="text-muted small mb-0">Registra o agendamento, realização e status das audiências vinculadas a processos.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_audiencia</td>
+                    <td>Identificador único da audiência.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; audiencia.id_audiencia</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_hora</td>
+                    <td>Data e hora agendadas para a realização da audiência.</td>
+                    <td>DATETIME</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; audiencia.data_hora</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_audiencia</td>
+                    <td>Tipo de audiência (ex: Conciliação, Instrução e Julgamento).</td>
+                    <td>VARCHAR(100)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; audiencia.tipo_audiencia</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">local_audiencia</td>
+                    <td>Localização física ou link de acesso virtual.</td>
+                    <td>VARCHAR(512)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; audiencia.local_audiencia</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">modalidade</td>
+                    <td>Modalidade do ato: PRESENCIAL, VIRTUAL ou HIBRIDA.</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; audiencia.modalidade</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">status</td>
+                    <td>Situação atual: AGENDADA, REALIZADA, ADIADA, CANCELADA.</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; audiencia.status</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">observacao</td>
+                    <td>Anotações e detalhes complementares da audiência.</td>
+                    <td>TEXT</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; audiencia.observacao</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica do registro.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; audiencia.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">processo_id_processo</td>
+                    <td>Chave estrangeira apontando para a tabela processo.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>processo.id_processo &rarr; audiencia.processo_id_processo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: CLIENTE -->
+          <section id="tabela_cliente" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>cliente</h3>
+              <p class="text-muted small mb-0">Cadastra pessoas físicas ou jurídicas que contratam os serviços jurídicos do escritório.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_cliente</td>
+                    <td>Identificador único do cliente.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; cliente.id_cliente</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_pessoa</td>
+                    <td>Tipo de personalidade jurídica: PF (Pessoa Física) ou PJ (Pessoa Jurídica).</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Cliente &rarr; cliente.tipo_pessoa</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">nome_razao_social</td>
+                    <td>Nome completo ou Razão Social do cliente. Anonimizado conforme LGPD.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Cliente &rarr; cliente.nome_razao_social</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">cpf_cnpj_cifrado</td>
+                    <td>CPF/CNPJ criptografado com algoritmo simétrico AES-256.</td>
+                    <td>VARBINARY(255)</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-danger">[DPS]</span></td>
+                    <td>Aplicação (AES-256) &rarr; cliente.cpf_cnpj_cifrado</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">cpf_cnpj_hash</td>
+                    <td>Hash determinante SHA-256 do CPF/CNPJ para buscas e garantia de unicidade.</td>
+                    <td>CHAR(64)</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-danger">[DPS]</span></td>
+                    <td>Aplicação (SHA-256) &rarr; cliente.cpf_cnpj_hash</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">email</td>
+                    <td>Endereço de e-mail de contato do cliente.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Cliente &rarr; cliente.email</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_cadastro</td>
+                    <td>Data e hora da inclusão do cliente no banco de dados.</td>
+                    <td>TIMESTAMP</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; cliente.data_cadastro</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica (1 para ativo, 0 para inativo).</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; cliente.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: COMARCA -->
+          <section id="tabela_comarca" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>comarca</h3>
+              <p class="text-muted small mb-0">Tabela de domínio com a divisão territorial judiciária e tribunal correspondente.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_comarca</td>
+                    <td>Identificador único da comarca.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; comarca.id_comarca</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">nome_comarca</td>
+                    <td>Nome oficial da comarca judiciária.</td>
+                    <td>VARCHAR(150)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Tabela Domínio &rarr; comarca.nome_comarca</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tribunal</td>
+                    <td>Sigla do tribunal (ex: TJSP, TRF3, TST).</td>
+                    <td>VARCHAR(150)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Tabela Domínio &rarr; comarca.tribunal</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Indicador de registro ativo (1) ou inativo (0).</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; comarca.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: CONSENTIMENTO_LGPD -->
+          <section id="tabela_consentimento_lgpd" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>consentimento_lgpd</h3>
+              <p class="text-muted small mb-0">Registra as bases legais e termos de consentimento fornecidos pelos titulares (LGPD).</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_consentimento_lgpd</td>
+                    <td>Identificador único do registro de consentimento.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; consentimento_lgpd.id_consentimento_lgpd</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">finalidade</td>
+                    <td>Objetivo específico do tratamento do dado pessoal.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Módulo LGPD &rarr; consentimento_lgpd.finalidade</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">base_legal</td>
+                    <td>Hipótese legal do Art. 7º ou 11 da LGPD (ex: Execução de Contrato).</td>
+                    <td>VARCHAR(100)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Módulo LGPD &rarr; consentimento_lgpd.base_legal</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_consentimento</td>
+                    <td>Data e hora em que o consentimento foi concedido.</td>
+                    <td>DATETIME</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Módulo LGPD &rarr; consentimento_lgpd.data_consentimento</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_revogação</td>
+                    <td>Data e hora de revogação do consentimento, se aplicável.</td>
+                    <td>DATETIME</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Módulo LGPD &rarr; consentimento_lgpd.data_revogação</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">versao_termo</td>
+                    <td>Versão do Termo de Privacidade aceito pelo titular.</td>
+                    <td>VARCHAR(30)</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Módulo LGPD &rarr; consentimento_lgpd.versao_termo</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status do registro de consentimento no sistema.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; consentimento_lgpd.ativo</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_parte</td>
+                    <td>Chave estrangeira vinculando à parte processual, se aplicável.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>parte.id_parte &rarr; consentimento_lgpd.id_parte</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_cliente</td>
+                    <td>Chave estrangeira vinculando ao cliente titular dos dados.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>cliente.id_cliente &rarr; consentimento_lgpd.id_cliente</td>
+                    <td>ADMIN: C/R/U | ADV: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: CONTRATO -->
+          <section id="tabela_contrato" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>contrato</h3>
+              <p class="text-muted small mb-0">Armazena os contratos de honorários advocatícios celebrados entre o escritório e o cliente.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_contrato</td>
+                    <td>Identificador único do contrato.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; contrato.id_contrato</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">valor_total</td>
+                    <td>Valor monetário total acordado no contrato de honorários.</td>
+                    <td>DECIMAL(10)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Contrato &rarr; contrato.valor_total</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_inicio</td>
+                    <td>Data da assinatura ou início de vigência contratual.</td>
+                    <td>DATE</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Contrato &rarr; contrato.data_inicio</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_fim</td>
+                    <td>Data de encerramento do contrato. Deve ser >= data_inicio.</td>
+                    <td>DATE</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Contrato &rarr; contrato.data_fim</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">status</td>
+                    <td>Status do contrato: ABERTO, EM_ANDAMENTO, ENCERRADO, CANCELADO.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Contrato &rarr; contrato.status</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">descricao_servico</td>
+                    <td>Descrição detalhada do escopo dos serviços jurídicos contratados.</td>
+                    <td>TEXT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Contrato &rarr; contrato.descricao_servico</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_cadastro</td>
+                    <td>Timestamp do cadastro no sistema.</td>
+                    <td>TIMESTAMP</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; contrato.data_cadastro</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; contrato.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_advogado</td>
+                    <td>Chave estrangeira do advogado responsável. Imutável após criação.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>advogado.id_advogado &rarr; contrato.id_advogado</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_cliente</td>
+                    <td>Chave estrangeira do cliente contratante.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>cliente.id_cliente &rarr; contrato.id_cliente</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: DOCUMENTO -->
+          <section id="tabela_documento" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>documento</h3>
+              <p class="text-muted small mb-0">Registra apenas os metadados e checksum de arquivos anexados a contratos ou processos.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_documento</td>
+                    <td>Identificador único do documento no banco.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; documento.id_documento</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_processo</td>
+                    <td>FK vinculando ao processo (pelo menos processo ou contrato deve existir).</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>processo.id_processo &rarr; documento.id_processo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_contrato</td>
+                    <td>FK vinculando ao contrato (pelo menos processo ou contrato deve existir).</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>contrato.id_contrato &rarr; documento.id_contrato</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">nome_documento</td>
+                    <td>Nome amigável do arquivo anexado.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Upload &rarr; documento.nome_documento</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_documento</td>
+                    <td>Classificação (ex: Petição Inicial, Procuração, Sentença).</td>
+                    <td>VARCHAR(100)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Upload &rarr; documento.tipo_documento</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">caminho_arquivo</td>
+                    <td>Caminho URI/relativo no repositório seguro externo de arquivos.</td>
+                    <td>VARCHAR(512)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Servidor Arquivos &rarr; documento.caminho_arquivo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">hash_sha256</td>
+                    <td>Hash integridade do arquivo físico para auditoria anti-adulteração.</td>
+                    <td>CHAR(64)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Algoritmo SHA-256 &rarr; documento.hash_sha256</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tamanho_bytes</td>
+                    <td>Tamanho exato do arquivo físico em bytes.</td>
+                    <td>BIGINT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Servidor Arquivos &rarr; documento.tamanho_bytes</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_upload</td>
+                    <td>Data e hora de envio do documento.</td>
+                    <td>TIMESTAMP</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; documento.data_upload</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; documento.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_usuario</td>
+                    <td>Chave estrangeira do usuário que efetuou o upload.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>usuario.id_usuario &rarr; documento.id_usuario</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: ENDERECO -->
+          <section id="tabela_endereco" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>endereco</h3>
+              <p class="text-muted small mb-0">Armazena os endereços físicos residenciais ou comerciais vinculados ao cliente.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_endereco</td>
+                    <td>Identificador único do endereço.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; endereco.id_endereco</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">logradouro</td>
+                    <td>Nome da rua, avenida ou praça. Anonimizado na LGPD.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Cliente &rarr; endereco.logradouro</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">numero_logradouro</td>
+                    <td>Número do imóvel.</td>
+                    <td>VARCHAR(20)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Cliente &rarr; endereco.numero_logradouro</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">complemento</td>
+                    <td>Complemento do endereço (ex: Bloco A, Apto 42).</td>
+                    <td>VARCHAR(100)</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Cliente &rarr; endereco.complemento</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">bairro</td>
+                    <td>Bairro de localização.</td>
+                    <td>VARCHAR(100)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Cliente &rarr; endereco.bairro</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">cep</td>
+                    <td>Código de Endereçamento Postal (8 caracteres numéricos).</td>
+                    <td>CHAR(8)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Cliente &rarr; endereco.cep</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_endereco</td>
+                    <td>Classificação: RESIDENCIAL, COMERCIAL ou CORRESPONDENCIA.</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Cliente &rarr; endereco.tipo_endereco</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica do registro.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; endereco.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_cliente</td>
+                    <td>Chave estrangeira vinculando ao cliente proprietário do endereço.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>cliente.id_cliente &rarr; endereco.id_cliente</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_municipio</td>
+                    <td>Chave estrangeira apontando para o município correspondente.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>municipio.id_municipio &rarr; endereco.id_municipio</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: FORMA_PAGAMENTO -->
+          <section id="tabela_forma_pagamento" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>forma_pagamento</h3>
+              <p class="text-muted small mb-0">Tabela de domínio com os meios aceitos para quitação das parcelas.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_forma_pagamento</td>
+                    <td>Identificador único do meio de pagamento.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; forma_pagamento.id_forma_pagamento</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">descricao</td>
+                    <td>Nome da forma de pagamento (ex: Dinheiro, Pix, Transferência, Boleto).</td>
+                    <td>VARCHAR(100)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Tabela Domínio &rarr; forma_pagamento.descricao</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Indicador de disponibilidade da forma de pagamento.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; forma_pagamento.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: LOG_AUDITORIA -->
+          <section id="tabela_log_auditoria" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>log_auditoria</h3>
+              <p class="text-muted small mb-0">Trilha de auditoria imutável (append-only) para todas as operações críticas de dados.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_log_auditoria</td>
+                    <td>Identificador único sequencial da auditoria.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; log_auditoria.id_log_auditoria</td>
+                    <td>ADMIN: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tabela_afetada</td>
+                    <td>Nome da tabela de negócio alterada.</td>
+                    <td>VARCHAR(46)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Triggers Sistema &rarr; log_auditoria.tabela_afetada</td>
+                    <td>ADMIN: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_registro_afetado</td>
+                    <td>ID da chave primária do registro modificado.</td>
+                    <td>BIGINT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Triggers Sistema &rarr; log_auditoria.id_registro_afetado</td>
+                    <td>ADMIN: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">operacao</td>
+                    <td>Tipo de ação realizada: INSERT, UPDATE, DELETE_LOGICO.</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Triggers Sistema &rarr; log_auditoria.operacao</td>
+                    <td>ADMIN: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_hora_operacao</td>
+                    <td>Timestamp exato do evento auditado.</td>
+                    <td>TIMESTAMP</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; log_auditoria.data_hora_operacao</td>
+                    <td>ADMIN: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">valor_anterior</td>
+                    <td>Payload JSON com o estado anterior do registro (mascarado LGPD).</td>
+                    <td>JSON</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Triggers Sistema &rarr; log_auditoria.valor_anterior</td>
+                    <td>ADMIN: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">valor_novo</td>
+                    <td>Payload JSON com o novo estado do registro (mascarado LGPD).</td>
+                    <td>JSON</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Triggers Sistema &rarr; log_auditoria.valor_novo</td>
+                    <td>ADMIN: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_usuario</td>
+                    <td>Chave estrangeira do usuário autenticado que executou a ação.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>usuario.id_usuario &rarr; log_auditoria.id_usuario</td>
+                    <td>ADMIN: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: MUNICIPIO -->
+          <section id="tabela_municipio" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>municipio</h3>
+              <p class="text-muted small mb-0">Tabela de domínio contendo a listagem oficial dos municípios e códigos IBGE.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_municipio</td>
+                    <td>Identificador único do município.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; municipio.id_municipio</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">codigo_ibge</td>
+                    <td>Código único de 7 dígitos do município segundo o IBGE.</td>
+                    <td>CHAR(7)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Censo IBGE &rarr; municipio.codigo_ibge</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">nome_municipio</td>
+                    <td>Nome oficial da cidade/município.</td>
+                    <td>VARCHAR(150)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Censo IBGE &rarr; municipio.nome_municipio</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">uf</td>
+                    <td>Sigla da Unidade Federativa (UF).</td>
+                    <td>CHAR(2)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Censo IBGE &rarr; municipio.uf</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Indicador de disponibilidade da localidade.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; municipio.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: ORGAO_JUDICIAL -->
+          <section id="tabela_orgao_judicial" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>orgao_judicial</h3>
+              <p class="text-muted small mb-0">Cadastra as varas judiciais e órgãos onde tramitam os processos do escritório.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_orgao_judicial</td>
+                    <td>Identificador único do órgão judicial.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; orgao_judicial.id_orgao_judicial</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">nome_vara</td>
+                    <td>Nome da vara ou câmara judicial (ex: 1ª Vara Cível).</td>
+                    <td>VARCHAR(150)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Tabela Domínio &rarr; orgao_judicial.nome_vara</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica da vara judicial.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; orgao_judicial.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_comarca</td>
+                    <td>Chave estrangeira apontando para a comarca jurisdicional.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>comarca.id_comarca &rarr; orgao_judicial.id_comarca</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: PAGAMENTO -->
+          <section id="tabela_pagamento" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>pagamento</h3>
+              <p class="text-muted small mb-0">Registra as baixas de pagamento de parcelas financeiras efetuadas de forma manual.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_pagamento</td>
+                    <td>Identificador único da quitação.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; pagamento.id_pagamento</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">valor_pago</td>
+                    <td>Valor em reais efetivamente baixado. Deve ser > 0.</td>
+                    <td>DECIMAL(10)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Lançamento Financeiro &rarr; pagamento.valor_pago</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_pagamento</td>
+                    <td>Data em que o pagamento foi realizado (<= data atual).</td>
+                    <td>DATE</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Lançamento Financeiro &rarr; pagamento.data_pagamento</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_cadastro</td>
+                    <td>Timestamp do recebimento no sistema.</td>
+                    <td>TIMESTAMP</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; pagamento.data_cadastro</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status do lançamento financeiro (1 ativo, 0 estornado).</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; pagamento.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_parcela</td>
+                    <td>Chave estrangeira apontando para a parcela amortizada.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>parcela.id_parcela &rarr; pagamento.id_parcela</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_forma_pagamento</td>
+                    <td>Chave estrangeira identificando a modalidade de liquidação.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>forma_pagamento.id_forma_pagamento &rarr; pagamento.id_forma_pagamento</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: PARCELA -->
+          <section id="tabela_parcela" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>parcela</h3>
+              <p class="text-muted small mb-0">Detalhamento e cronograma de parcelas financeiras vinculadas a um contrato.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_parcela</td>
+                    <td>Identificador único da parcela.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; parcela.id_parcela</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">numero_parcela</td>
+                    <td>Número sequencial da parcela no contrato (1, 2, 3...).</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Plano de Contrato &rarr; parcela.numero_parcela</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">valor_parcela</td>
+                    <td>Valor nominal programado da parcela em reais.</td>
+                    <td>DECIMAL(10)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Plano de Contrato &rarr; parcela.valor_parcela</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_vencimento</td>
+                    <td>Data limite pactuada para quitação da parcela.</td>
+                    <td>DATE</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Plano de Contrato &rarr; parcela.data_vencimento</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica da parcela.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; parcela.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_contrato</td>
+                    <td>Chave estrangeira que vincula a parcela ao seu contrato pai.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>contrato.id_contrato &rarr; parcela.id_contrato</td>
+                    <td>ADMIN: C/R/U/E | ADV: R | ASSIST: C/R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: PARTE -->
+          <section id="tabela_parte" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>parte</h3>
+              <p class="text-muted small mb-0">Cadastro reutilizável de partes envolvidas nos processos judiciais (ex: Réu, Autor).</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_parte</td>
+                    <td>Identificador único da parte processual.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; parte.id_parte</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_pessoa</td>
+                    <td>Tipo de personalidade: PF (Pessoa Física) ou PJ (Pessoa Jurídica).</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Parte &rarr; parte.tipo_pessoa</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">nome_razao_social</td>
+                    <td>Nome ou Razão Social da parte processual. Sujeito à LGPD.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Parte &rarr; parte.nome_razao_social</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">cpf_cnpj_cifrado</td>
+                    <td>CPF/CNPJ da parte criptografado com AES-256.</td>
+                    <td>VARBINARY(255)</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-danger">[DPS]</span></td>
+                    <td>Aplicação (AES-256) &rarr; parte.cpf_cnpj_cifrado</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">cpf_cnpj_hash</td>
+                    <td>Hash SHA-256 do documento para busca exata sem decifrar.</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-danger">[DPS]</span></td>
+                    <td>Aplicação (SHA-256) &rarr; parte.cpf_cnpj_hash</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_cliente</td>
+                    <td>FK opcional caso a parte seja também um cliente do escritório.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>cliente.id_cliente &rarr; parte.id_cliente</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: PARTE_PROCESSO -->
+          <section id="tabela_parte_processo" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>parte_processo</h3>
+              <p class="text-muted small mb-0">Tabela associativa que vincula uma parte a um processo especificando seu polo e qualificação.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_parte_processo</td>
+                    <td>Identificador único da relação parte-processo.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; parte_processo.id_parte_processo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_parte</td>
+                    <td>Qualificação funcional (ex: Autor, Réu, Litisconsorte, Terceiro).</td>
+                    <td>VARCHAR(50)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; parte_processo.tipo_parte</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">polo</td>
+                    <td>Polo de atuação no litígio: ATIVO, PASSIVO ou TERCEIRO.</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; parte_processo.polo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status da vinculação no processo.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; parte_processo.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_processo</td>
+                    <td>Chave estrangeira apontando para o processo correspondente.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>processo.id_processo &rarr; parte_processo.id_processo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_parte</td>
+                    <td>Chave estrangeira vinculando à parte cadastrada.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>parte.id_parte &rarr; parte_processo.id_parte</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: PRAZO_PROCESSUAL -->
+          <section id="tabela_prazo_processual" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>prazo_processual</h3>
+              <p class="text-muted small mb-0">Controle de prazos e providências judiciais dos processos com monitoramento de vencimentos.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_prazo_processual</td>
+                    <td>Identificador único do prazo processual.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; prazo_processual.id_prazo_processual</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">descricao_tarefa</td>
+                    <td>Descrição detalhada do ato a ser praticado (ex: Réplica à Contestação).</td>
+                    <td>TEXT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Prazos &rarr; prazo_processual.descricao_tarefa</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_publicacao</td>
+                    <td>Data de intimação ou publicação no Diário de Justiça.</td>
+                    <td>DATE</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Prazos &rarr; prazo_processual.data_publicacao</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">dias_prazo</td>
+                    <td>Quantidade de dias concedidos para o prazo.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Prazos &rarr; prazo_processual.dias_prazo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_contagem</td>
+                    <td>Tipo de contagem do prazo: 1 (Dias Úteis) ou 2 (Dias Corridos).</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Prazos &rarr; prazo_processual.tipo_contagem</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_limite</td>
+                    <td>Data limite fatal para o cumprimento. Deve ser > data_publicacao.</td>
+                    <td>DATE</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Aplicação / Cálculo &rarr; prazo_processual.data_limite</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">status</td>
+                    <td>Situação atual: PENDENTE, CUMPRIDO, VENCIDO, CANCELADO.</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Event / Sistema &rarr; prazo_processual.status</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_conclusao</td>
+                    <td>Data e hora exatas de baixa do cumprimento.</td>
+                    <td>DATETIME</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Prazos &rarr; prazo_processual.data_conclusao</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; prazo_processual.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_processo</td>
+                    <td>Chave estrangeira vinculando ao processo objeto do prazo.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>processo.id_processo &rarr; prazo_processual.id_processo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_usuario</td>
+                    <td>Chave estrangeira do advogado/usuário responsável pela tarefa.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>usuario.id_usuario &rarr; prazo_processual.id_usuario</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: C/R/U</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: PROCESSO -->
+          <section id="tabela_processo" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>processo</h3>
+              <p class="text-muted small mb-0">Armazena os dados principais das ações judiciais patrocinadas pelo escritório.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_processo</td>
+                    <td>Identificador único do processo no sistema.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; processo.id_processo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">numero_processo</td>
+                    <td>Número Único de Processo no padrão CNJ (20 dígitos numéricos).</td>
+                    <td>CHAR(20)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; processo.numero_processo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_acao</td>
+                    <td>Tipo ou classe processual (ex: Ação de Cobrança, Reclamação Trabalhista).</td>
+                    <td>VARCHAR(150)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; processo.tipo_acao</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">area_direito</td>
+                    <td>Ramo do direito envolvido (ex: Cível, Trabalhista, Tributário).</td>
+                    <td>VARCHAR(100)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; processo.area_direito</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_distribuicao</td>
+                    <td>Data de distribuição do processo (deve ser <= data atual).</td>
+                    <td>DATE</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; processo.data_distribuicao</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">status</td>
+                    <td>Fase do processo: ABERTO, EM_ANDAMENTO, ENCERRADO, CANCELADO.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; processo.status</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">descricao</td>
+                    <td>Resumo do objeto da ação e histórico do processo.</td>
+                    <td>TIMESTAMP</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Processo &rarr; processo.descricao</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica do processo.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; processo.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_contrato</td>
+                    <td>Chave estrangeira vinculando ao contrato de honorários suporte.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>contrato.id_contrato &rarr; processo.id_contrato</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_advogado</td>
+                    <td>Chave estrangeira do advogado responsável pela condução.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>advogado.id_advogado &rarr; processo.id_advogado</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_orgao_judicial</td>
+                    <td>Chave estrangeira do órgão judiciário/vara onde tramita.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>orgao_judicial.id_orgao_judicial &rarr; processo.id_orgao_judicial</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U/E | ASSIST: R</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: TELEFONE_CLIENTE -->
+          <section id="tabela_telefone_cliente" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>telefone_cliente</h3>
+              <p class="text-muted small mb-0">Armazena os telefones de contato cadastrados para os clientes (relação 1:N).</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_telefone_cliente</td>
+                    <td>Identificador único do telefone.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; telefone_cliente.id_telefone_cliente</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">numero_telefone</td>
+                    <td>Número telefônico com DDD. Anonimizado pela LGPD.</td>
+                    <td>VARCHAR(20)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Cliente &rarr; telefone_cliente.numero_telefone</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tipo_telefone</td>
+                    <td>Tipo do número: CELULAR, RESIDENCIAL, COMERCIAL, WHATSAPP.</td>
+                    <td>VARCHAR(45)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Cliente &rarr; telefone_cliente.tipo_telefone</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">principal</td>
+                    <td>Flag indicando se é o número principal de contato (1=Sim, 0=Não).</td>
+                    <td>TINYINT(0)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Cliente &rarr; telefone_cliente.principal</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica do número.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; telefone_cliente.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">id_cliente</td>
+                    <td>Chave estrangeira vinculando o telefone ao cliente correspondente.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-primary">[FK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>cliente.id_cliente &rarr; telefone_cliente.id_cliente</td>
+                    <td>ADMIN: C/R/U/E | ADV: C/R/U | ASSIST: C/R/U</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TABELA: USUARIO -->
+          <section id="tabela_usuario" class="card mb-4 border-0 shadow-sm dictionary-section">
+            <div class="card-header bg-white py-3">
+              <h3 class="h5 mb-1 text-primary-custom fw-bold"><i class="fa-solid fa-table me-2"></i>usuario</h3>
+              <p class="text-muted small mb-0">Controle de credenciais de acesso, perfis RBAC e política de bloqueio do sistema.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark-custom">
+                  <tr>
+                    <th>Atributo</th>
+                    <th>Descrição / Regra de Negócio</th>
+                    <th>Tipo e Tamanho</th>
+                    <th>Constraints</th>
+                    <th>Privacidade</th>
+                    <th>Linhagem</th>
+                    <th>RBAC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fw-bold">id_usuario</td>
+                    <td>Identificador único do usuário do sistema.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-dark">[PK]</span> <span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; usuario.id_usuario</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">nome</td>
+                    <td>Nome completo do usuário/colaborador.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Usuário &rarr; usuario.nome</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">login</td>
+                    <td>Username de login único no sistema.</td>
+                    <td>VARCHAR(100)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span> <span class="badge bg-info text-dark">[UNIQUE]</span></td>
+                    <td><span class="badge bg-warning text-dark">[DP]</span></td>
+                    <td>Formulário Usuário &rarr; usuario.login</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">senha_hash</td>
+                    <td>Hash criptográfico da senha de acesso gerado com Argon2id.</td>
+                    <td>VARCHAR(255)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-danger">[DPS]</span></td>
+                    <td>Argon2id Hash &rarr; usuario.senha_hash</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">perfil</td>
+                    <td>Perfil de acesso RBAC: ADMINISTRADOR, ADVOGADO, ASSISTENTE.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Formulário Usuário &rarr; usuario.perfil</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_cadastro</td>
+                    <td>Timestamp do cadastro do usuário.</td>
+                    <td>TIMESTAMP</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; usuario.data_cadastro</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_ultimo_acesso</td>
+                    <td>Data e hora da última autenticação efetuada com sucesso.</td>
+                    <td>DATETIME</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Autenticação &rarr; usuario.data_ultimo_acesso</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">tentativas_falhas</td>
+                    <td>Contador de tentativas incorretas de login consecutivas.</td>
+                    <td>INT</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Autenticação &rarr; usuario.tentativas_falhas</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">data_bloquei_ate</td>
+                    <td>Data/hora limite de bloqueio temporário da conta.</td>
+                    <td>DATETIME</td>
+                    <td><span class="badge bg-light text-dark">[NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Autenticação &rarr; usuario.data_bloquei_ate</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">ativo</td>
+                    <td>Status de exclusão lógica do usuário.</td>
+                    <td>TINYINT(1)</td>
+                    <td><span class="badge bg-secondary">[NOT NULL]</span></td>
+                    <td><span class="badge bg-success">[N/A]</span></td>
+                    <td>Sistema &rarr; usuario.ativo</td>
+                    <td>ADMIN: C/R/U/E | ADV: R (Próprio)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL DO VISUALIZADOR DE DER COM PANZOOM -->
+  <div class="modal fade" id="modalDER" tabindex="-1" aria-labelledby="modalDERLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fw-bold" id="modalDERLabel">
+            <i class="fa-solid fa-diagram-project me-2"></i>Diagrama Entidade-Relacionamento (DER) - Modelo Lógico
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body p-0 bg-secondary-subtle position-relative overflow-hidden" id="modalPanzoomContainer">
+          
+          <!-- BOTÕES FLUTUANTES DE CONTROLE DO ZOOM -->
+          <div class="panzoom-controls position-absolute top-0 start-0 m-3 z-3 bg-white p-2 rounded shadow-sm d-flex gap-2">
+            <button type="button" class="btn btn-outline-dark btn-sm" id="btnZoomIn" title="Aumentar Zoom">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> Zoom +
+            </button>
+            <button type="button" class="btn btn-outline-dark btn-sm" id="btnZoomOut" title="Diminuir Zoom">
+              <i class="fa-solid fa-magnifying-glass-minus"></i> Zoom -
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="btnZoomReset" title="Resetar Visualização">
+              <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+          </div>
+
+          <!-- ÁREA RECT DA IMAGEM PANZOOM -->
+          <div class="d-flex justify-content-center align-items-center w-100 h-100" id="panzoomTarget">
+            <img src="assets/der.png" id="derImage" alt="Diagrama Entidade-Relacionamento DER" class="img-fluid panzoom-img">
+          </div>
+
+        </div>
+        <div class="modal-footer bg-light py-2">
+          <small class="text-muted me-auto"><i class="fa-solid fa-circle-info me-1"></i> Use a roda do mouse para dar zoom e arraste segurando o clique para navegar pela imagem.</small>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIBLIOTECAS EXTERNAS (CDNs OFICIAIS) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+</body>
+</html>

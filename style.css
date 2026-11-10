@@ -1,0 +1,161 @@
+/* ==========================================================================
+   IDENTIDADE VISUAL DA EMPRESA E CUSTOMIZAÇÃO DE TEMA
+   ========================================================================== */
+
+   :root {
+    --primary-color: #000080; /* Azul Marinho Solicitado */
+    --primary-hover: #000066;
+    --bg-light: #F4F4F9;      /* Cinza Claro Solicitado */
+    --table-header-bg: #000080;
+    --table-header-color: #ffffff;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #333333;
+    --card-bg: #ffffff;
+    --border-color: #e3e6f0;
+  }
+  
+  [data-bs-theme="dark"] {
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --bg-light: #121212;
+    --table-header-bg: #1e1e2d;
+    --table-header-color: #ffffff;
+    --sidebar-bg: #1e1e1e;
+    --sidebar-text: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --border-color: #2d2d2d;
+  }
+  
+  body {
+    background-color: var(--bg-light);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--bs-body-color);
+    transition: background-color 0.3s ease;
+  }
+  
+  /* TOPBAR */
+  .custom-topbar {
+    background-color: #000080 !important;
+    border-bottom: 2px solid #000055;
+  }
+  
+  .text-primary-custom {
+    color: var(--primary-color) !important;
+  }
+  
+  .btn-primary-custom {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .btn-primary-custom:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
+  
+  .btn-outline-primary-custom {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .btn-outline-primary-custom:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+  }
+  
+  /* SIDEBAR RESPONSIVA */
+  .sidebar {
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    background-color: var(--sidebar-bg) !important;
+    overflow-y: auto;
+  }
+  
+  .sidebar-sticky {
+    height: calc(100vh - 56px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  .sidebar .nav-link {
+    font-weight: 500;
+    color: var(--sidebar-text);
+    padding: 0.6rem 1rem;
+    border-radius: 0.25rem;
+    margin: 0.1rem 0.5rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .sidebar .nav-link:hover,
+  .sidebar .nav-link.active {
+    color: #ffffff;
+    background-color: var(--primary-color);
+  }
+  
+  /* CABEÇALHO DAS TABELAS */
+  .table-dark-custom {
+    background-color: var(--table-header-bg) !important;
+    color: var(--table-header-color) !important;
+  }
+  
+  .table-dark-custom th {
+    background-color: var(--table-header-bg) !important;
+    color: var(--table-header-color) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+  }
+  
+  /* CARDS E PAINÉIS */
+  .card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-card-header {
+    border-left: 5px solid var(--primary-color) !important;
+  }
+  
+  /* MODAL E PANZOOM DO DER */
+  #modalPanzoomContainer {
+    cursor: grab;
+    height: calc(100vh - 120px);
+    background-color: #1a1a1a;
+  }
+  
+  #modalPanzoomContainer:active {
+    cursor: grabbing;
+  }
+  
+  .panzoom-img {
+    max-width: none;
+    transition: transform 0.1s ease-out;
+  }
+  
+  /* DESTAQUE DE PESQUISA */
+  .highlight-row {
+    background-color: rgba(255, 235, 59, 0.3) !important;
+  }
+  
+  /* RESPONSIVIDADE CELULARES */
+  @media (max-width: 767.98px) {
+    .sidebar {
+      position: static;
+      height: auto;
+    }
+    .sidebar-sticky {
+      height: auto;
+    }
+    .border-start-lg {
+      border-left: none !important;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
+    }
+  }
